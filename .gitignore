@@ -1,0 +1,7 @@
+﻿/.vs/NumberValidator/v16/.suo
+obj/
+debug/
+bin/
+.idea/
+NumberValidator/obj/*
+NumberValidator/bin/*
