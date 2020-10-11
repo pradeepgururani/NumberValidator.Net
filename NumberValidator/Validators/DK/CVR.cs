@@ -36,7 +36,7 @@ namespace NumberValidator.Validators.DK
                 Validate(input);
                 return true;
             }
-            catch (Exception e)
+            catch
             {
                 return false;
             }
