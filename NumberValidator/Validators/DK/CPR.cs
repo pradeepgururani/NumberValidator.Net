@@ -81,15 +81,27 @@ namespace NumberValidator.Validators.DK
 
         private bool BirthdateInFuture(string cpr)
         {
-            var dobPart = cpr.Substring(0, 6);
+            var day = int.Parse(cpr.Substring(0, 2));
+            var month = int.Parse(cpr.Substring(2, 2));
+            var year = int.Parse(cpr.Substring(4, 2));
 
-            if (DateTime.TryParseExact(dobPart, "ddMMyy", CultureInfo.InvariantCulture, DateTimeStyles.None,
-                out var dob))
+            if ("5678".Contains(cpr[6].ToString()) && year >= 58)
             {
-                return dob > DateTime.Today;
+                year += 1800;
             }
+            else if ("0123".Contains(cpr[6].ToString()) ||
+                     ("49".Contains(cpr[6].ToString()) && year >= 37))
+            {
+                year += 1900;
+            }
+            else
+            {
+                year += 2000;
+            }
+            
+            var dob = new DateTime(year, month, day);
 
-            throw new InvalidComponentException();
+            return dob > DateTime.Today;
         }
 
         /// <summary>

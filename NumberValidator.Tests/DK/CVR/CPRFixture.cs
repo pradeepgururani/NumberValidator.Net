@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System;
+using FluentAssertions;
 using NumberValidator.Helpers;
 using Xunit;
 
@@ -22,7 +23,7 @@ namespace NumberValidator.Tests.DK.CVR
 
         [Fact]
         void ShouldBeInvalidForBadDate() 
-            => _sut.Invoking(_ => _.Validate("511062-5629")).Should().Throw<InvalidComponentException>();
+            => _sut.Invoking(_ => _.Validate("511062-5629")).Should().Throw<ArgumentOutOfRangeException>();
         
         [Fact]
         void FutureDateShouldBeInvalid() 
