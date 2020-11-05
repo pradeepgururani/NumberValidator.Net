@@ -53,7 +53,7 @@ namespace NumberValidator.Validators.DK
                 Validate(cpr);
                 return true;
             }
-            catch (Exception exception)
+            catch
             {
                 return false;
             }
@@ -102,24 +102,6 @@ namespace NumberValidator.Validators.DK
             var dob = new DateTime(year, month, day);
 
             return dob > DateTime.Today;
-        }
-
-        /// <summary>
-        /// checksum isn't actually used any more. Valid numbers used to have a checksum of 0
-        /// </summary>
-        /// <param name="cpr"></param>
-        /// <returns></returns>
-        private int Checksum(string cpr)
-        {
-            var weights = new[] {4, 3, 2, 7, 6, 5, 4, 3, 2, 1};
-
-            var sum = 0;
-            for (var index = 0; index < 10; index++)
-            {
-                sum += int.Parse(cpr[index].ToString()) * weights[index];
-            }
-
-            return sum % 11;
         }
     }
 }

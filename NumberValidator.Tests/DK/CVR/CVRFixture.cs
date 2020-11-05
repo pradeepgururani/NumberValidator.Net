@@ -43,5 +43,13 @@ namespace NumberValidator.Tests.DK.CVR
         [Fact]
         void ShouldBeValidWithCountryCode() 
             => _sut.IsValid("DK 37367605").Should().BeTrue();
+        
+        [Fact]
+        void ShouldBeInValidWithLesserDigits() 
+            => _sut.IsValid("7367605").Should().BeTrue();
+        
+        [Fact]
+        void ShouldBeInValidWithMoreDigits() 
+            => _sut.IsValid("7367605484").Should().BeTrue();
     }
 }

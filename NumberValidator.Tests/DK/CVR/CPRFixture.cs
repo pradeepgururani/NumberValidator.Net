@@ -32,5 +32,13 @@ namespace NumberValidator.Tests.DK.CVR
         [Fact]
         void ValidShouldBeTrue()
             => _sut.IsValid("051214-7121").Should().BeTrue();
+        
+        [Fact]
+        void ValidCprShouldBeTrue()
+            => _sut.IsValid("051214-2122").Should().BeTrue();
+        
+        [Fact]
+        void InValidCprShouldBeFalse()
+            => _sut.IsValid("051214-21226").Should().BeFalse();
     }
 }
