@@ -16,7 +16,7 @@ namespace NumberValidator.Helpers
             return removeAllNonDigits.Replace(input, "");
         }
 
-        public static bool IsDigit(this string input)
+        public static bool IsDigits(this string input)
         {
             var digitsRegularExpression = new Regex("^[0-9]+$");
 

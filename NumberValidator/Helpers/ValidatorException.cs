@@ -32,9 +32,9 @@ namespace NumberValidator.Helpers
     /// some invalid reference.
     /// </summary>
     [Serializable]
-    public class InvalidComponent : Exception
+    public class InvalidComponentException : Exception
     {
-        public InvalidComponent() 
+        public InvalidComponentException() 
             : base("One of the parts of the number are invalid or unknown.")
         { }
     }

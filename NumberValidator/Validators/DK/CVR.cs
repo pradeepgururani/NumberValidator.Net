@@ -57,11 +57,9 @@ namespace NumberValidator.Validators.DK
             ValidateFormat(cvr);
         }
 
-        private string ValidateFormat(string cvr)
+        private void ValidateFormat(string cvr)
         {
-            cvr = cvr.Clean();
-
-            if (!cvr.IsDigit() || cvr.StartsWith("0") || cvr.Length != 8)
+            if (!cvr.IsDigits() || cvr.StartsWith("0") || cvr.Length != 8)
             {
                 throw new InvalidFormatException();
             }
@@ -70,8 +68,6 @@ namespace NumberValidator.Validators.DK
             {
                 throw new InvalidChecksumException();
             }
-
-            return cvr;
         }
 
         private int Checksum(string cvr)
