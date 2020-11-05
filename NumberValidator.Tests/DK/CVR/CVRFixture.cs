@@ -46,10 +46,10 @@ namespace NumberValidator.Tests.DK.CVR
         
         [Fact]
         void ShouldBeInValidWithLesserDigits() 
-            => _sut.IsValid("7367605").Should().BeTrue();
+            => _sut.IsValid("7367605").Should().BeFalse();
         
         [Fact]
         void ShouldBeInValidWithMoreDigits() 
-            => _sut.IsValid("7367605484").Should().BeTrue();
+            => _sut.IsValid("7367605484").Should().BeFalse();
     }
 }
