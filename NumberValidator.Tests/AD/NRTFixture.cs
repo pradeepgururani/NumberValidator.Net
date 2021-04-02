@@ -39,8 +39,6 @@ namespace NumberValidator.Tests.DK
         void ShouldBeInvalidFormatNumberBetween()
            => Assert.Throws<InvalidComponentException>(() => _sut.Validate("A800000X"));
 
-
-
     }
 }
        

@@ -30,9 +30,6 @@
 
 
 using NumberValidator.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace NumberValidator.Validators.DK
@@ -53,15 +50,11 @@ namespace NumberValidator.Validators.DK
         }
 
 
-
         /// <summary>
         /// NRT (Número de Registre Tributari, Andorra tax number)
         /// </summary>
         /// <param name="nrt"></param>
         /// <returns>True if NRT is valid</returns>
-        /// 
-
-
         public void Validate(string nrt)
         {
 
@@ -70,11 +63,11 @@ namespace NumberValidator.Validators.DK
                 throw new InvalidFormatException();
             }
 
-            if ((!Regex.IsMatch(nrt, "^[ACDEFGLOPU]")) 
-                
-                || (nrt[0] == 'F' && int.Parse(nrt.Substring(1, 6)) > 699999) 
-                
-                || ((nrt[0] == 'A' || nrt[0] == 'L') && !(699999 < int.Parse(nrt.Substring(1, 6)) && int.Parse(nrt.Substring(1, 6)) < 800000)))
+            if ((!Regex.IsMatch(nrt, "^[ACDEFGLOPU]")) ||
+                (nrt[0] == 'F' && int.Parse(nrt.Substring(1, 6)) > 699999) || 
+                ((nrt[0] == 'A' || nrt[0] == 'L') &&
+                    !(699999 < int.Parse(nrt.Substring(1, 6)) &&
+                        int.Parse(nrt.Substring(1, 6)) < 800000)))
             {
                 throw new InvalidComponentException();
             }
