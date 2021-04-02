@@ -27,7 +27,19 @@ namespace NumberValidator.Tests.DK
         void ShouldBeValidForother()
             => _sut.IsValid("U132950X").Should().BeTrue();
 
-        
+        [Fact]
+        void ShouldBeInValidcode()
+           => _sut.IsValid("U13925000X").Should().BeFalse();
+
+        [Fact]
+        void ShouldBeInvalidFormatNumberHigher()
+           => Assert.Throws<InvalidComponentException>(() => _sut.Validate("F700000A"));
+
+        [Fact]
+        void ShouldBeInvalidFormatNumberBetween()
+           => Assert.Throws<InvalidComponentException>(() => _sut.Validate("A800000X"));
+
+
 
     }
 }
