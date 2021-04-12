@@ -1,5 +1,5 @@
 ﻿using NumberValidator.Helpers;
-using FluentAssertions;
+using FluentAssertion;
 using Xunit;
 
 namespace NumberValidator.Tests.AD
@@ -27,6 +27,7 @@ namespace NumberValidator.Tests.AD
 
         [Fact]
         void ShouldBeInValidCode()
+
            => _sut.IsValid("U13925000X").Should().BeFalse();
 
         [Fact]

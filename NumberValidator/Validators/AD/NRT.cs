@@ -59,7 +59,6 @@ namespace NumberValidator.Validators.AD
        
         public void Validate(string nrt)
         {
-
             if (nrt.Length != 8)
             {
                 throw new InvalidLengthException();
