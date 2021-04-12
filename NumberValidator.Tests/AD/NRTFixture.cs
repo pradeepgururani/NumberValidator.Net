@@ -14,7 +14,11 @@ namespace NumberValidator.Tests.AD
             => Assert.Throws<InvalidLengthException>(() => _sut.Validate("0123456"));
 
         [Fact]
-        void ShouldBeInvalidFormatFirstandLastCharacterMustbLetters()
+        void ShouldBeInvalidFormatFirstCharacterMustbLetters()
+            => Assert.Throws<InvalidFormatException>(() => _sut.Validate("0123456N"));
+
+        [Fact]
+        void ShouldBeInvalidFormatLastCharacterMustbLetters()
             => Assert.Throws<InvalidFormatException>(() => _sut.Validate("A1234567"));
 
         [Fact]
