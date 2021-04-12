@@ -1,34 +1,37 @@
 ﻿using NumberValidator.Helpers;
 using FluentAssertions;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
-namespace NumberValidator.Tests.DK
+namespace NumberValidator.Tests.AD
 {
     public class NRTFixture
     {
-        private readonly Validators.DK.NRT _sut = new Validators.DK.NRT();
+        private readonly Validators.AD.NRT _sut = new Validators.AD.NRT();
 
-        [Fact]
+
+       [Fact]
         void ShouldBeInvalidForLessThan8Digits()
-            => Assert.Throws<InvalidFormatException>(() => _sut.Validate("1234567"));
+            => Assert.Throws<InvalidLengthException>(() => _sut.Validate("0123456"));
 
         [Fact]
-        void ShouldBeInvalidFormatFirstandlastcharactermustbletters()
+        void ShouldBeInvalidFormatFirstCharacterMustbLetters()
+            => Assert.Throws<InvalidFormatException>(() => _sut.Validate("0123456N"));
+
+        [Fact]
+        void ShouldBeInvalidFormatLastCharacterMustbLetters()
             => Assert.Throws<InvalidFormatException>(() => _sut.Validate("A1234567"));
 
         [Fact]
-        void ShouldBeInvalidFormatFirstlettermustBe()
+        void ShouldBeInvalidFormatFirstLetterMustBe()
             => Assert.Throws<InvalidComponentException>(() => _sut.Validate("X059888N"));
 
         [Fact]
-        void ShouldBeValidForother()
+        void ShouldBeValidForOther()
             => _sut.IsValid("U132950X").Should().BeTrue();
 
         [Fact]
-        void ShouldBeInValidcode()
+        void ShouldBeInValidCode()
+
            => _sut.IsValid("U13925000X").Should().BeFalse();
 
         [Fact]
