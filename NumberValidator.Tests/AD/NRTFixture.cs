@@ -8,6 +8,7 @@ namespace NumberValidator.Tests.AD
     {
         private readonly Validators.AD.NRT _sut = new Validators.AD.NRT();
 
+
        [Fact]
         void ShouldBeInvalidForLessThan8Digits()
             => Assert.Throws<InvalidLengthException>(() => _sut.Validate("0123456"));

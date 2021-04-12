@@ -50,6 +50,7 @@ namespace NumberValidator.Validators.AD
         }
 
 
+
         /// <summary>
         /// NRT (Número de Registre Tributari, Andorra tax number)
         /// </summary>
