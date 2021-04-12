@@ -1,5 +1,5 @@
 ﻿using NumberValidator.Helpers;
-using FluentAssertion;
+using FluentAssertions;
 using Xunit;
 
 namespace NumberValidator.Tests.AD
