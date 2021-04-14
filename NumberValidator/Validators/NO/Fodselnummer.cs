@@ -49,7 +49,7 @@ namespace NumberValidator.Validators.NO
             }
         }
 
-        private int CheckDigit1(string fsn)
+        public int CheckDigit1(string fsn)
         {
             var weights = new[] { 3, 7, 6, 1, 8, 9, 4, 5, 2 };
 
@@ -63,7 +63,7 @@ namespace NumberValidator.Validators.NO
             return (sum);
         }
 
-        private int CheckDigit2(string fsn)
+        public int CheckDigit2(string fsn)
         {
             var weights = new[] { 5, 4, 3, 2, 7, 6, 5, 4, 3, 2 };
             var sum = 0;
@@ -89,7 +89,7 @@ namespace NumberValidator.Validators.NO
                 return 'M';
             }
         }
-        private bool BirthdateInFuture(string fsn)
+        public bool BirthdateInFuture(string fsn)
         {
             var day = int.Parse(fsn.Substring(0, 2));
             var month = int.Parse(fsn.Substring(2, 2));
@@ -130,6 +130,10 @@ namespace NumberValidator.Validators.NO
             {
                 year = year + 1900;
             }
+            else
+            {
+                throw new InvalidComponentException();
+            }
 
 
             var dob = new DateTime(year, month, day);
@@ -155,12 +159,16 @@ namespace NumberValidator.Validators.NO
                 throw new InvalidComponentException();
             }
 
-            if (int.Parse(fsn[fsn.Length - 2].ToString()) != CheckDigit1(fsn) ||
-                int.Parse(fsn[fsn.Length - 1].ToString()) != CheckDigit2(fsn) )
+            if (int.Parse(fsn[fsn.Length - 2].ToString()) != CheckDigit1(fsn))
+               
             {
                 throw new InvalidChecksumException();
             }
-            if(GetGender(fsn)!='F' &&
+            if  (int.Parse(fsn[fsn.Length - 1].ToString()) != CheckDigit2(fsn))
+            {
+                throw new InvalidChecksumException();
+            }
+            if (GetGender(fsn)!='F' &&
                GetGender(fsn)!= 'M')
             {
                 throw new InvalidComponentException();
