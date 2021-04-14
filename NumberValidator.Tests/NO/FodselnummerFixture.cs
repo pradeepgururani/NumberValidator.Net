@@ -28,6 +28,10 @@ namespace NumberValidator.Tests.NO.Fodselnummer
         [Fact]
         void InValidFodselnummerShouldBeFalse()
             => _sut.IsValid("051214-2122").Should().BeFalse();
+
+        [Fact]
+        void GetGenderShouldBeFemale()
+            => _sut.GetGender("151086-95088").Should().Be('F');
         
         [Fact]
         void ShouldBeInvalidForWrongChecksum()

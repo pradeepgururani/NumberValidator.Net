@@ -76,17 +76,17 @@ namespace NumberValidator.Validators.NO
 
             return (sum);
         }
-        private char GetGender(string fsn)
+        public char GetGender(string fsn)
         {
             fsn = fsn.Clean();
-            var temp = int.Parse(fsn[6].ToString());
+            var temp = int.Parse(fsn[8].ToString());
             if (temp % 2 == 0)
             {
-                return 'M';
+                return 'F';
             }
             else
             {
-                return 'F';
+                return 'M';
             }
         }
         private bool BirthdateInFuture(string fsn)
@@ -160,6 +160,12 @@ namespace NumberValidator.Validators.NO
             {
                 throw new InvalidChecksumException();
             }
+            if(GetGender(fsn)!='F' &&
+               GetGender(fsn)!= 'M')
+            {
+                throw new InvalidComponentException();
+            }
+           
         }
     }
 }
