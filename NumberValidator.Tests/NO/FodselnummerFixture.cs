@@ -19,15 +19,16 @@ namespace NumberValidator.Tests.NO.Fodselnummer
 
         [Fact]
         void ShouldBeInvalidForLessThan11Digits()
-            => _sut.Invoking(_ => _.Validate("123456789")).Should().Throw<InvalidLengthException>()
+            => _sut.Invoking(_ => _.Validate("123456789")).Should().Throw<InvalidLengthException>();
 
         [Fact]
         void ValidFodselnummerShouldBeTrue()
-            => _sut.IsValid("151086 95088").Should().BeTrue();
+            => _sut.IsValid("15108695088").Should().BeTrue();
 
         [Fact]
         void InValidFodselnummerShouldBeFalse()
             => _sut.IsValid("051214-2122").Should().BeFalse();
+        
         [Fact]
         void ShouldBeInvalidForWrongChecksum()
           => Assert.Throws<InvalidChecksumException>(() => _sut.Validate("15108695077"));

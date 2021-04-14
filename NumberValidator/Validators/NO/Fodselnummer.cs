@@ -49,7 +49,7 @@ namespace NumberValidator.Validators.NO
             }
         }
 
-        private string CheckDigit1(string fsn)
+        private int CheckDigit1(string fsn)
         {
             var weights = new[] { 3, 7, 6, 1, 8, 9, 4, 5, 2 };
 
@@ -58,12 +58,12 @@ namespace NumberValidator.Validators.NO
             {
                 sum += int.Parse(fsn[index].ToString()) * weights[index];
             }
-            sum = (11 - sum) % 11;
+            sum = 11 - (sum % 11);
 
-            return (sum.ToString());
+            return (sum);
         }
 
-        private string CheckDigit2(string fsn)
+        private int CheckDigit2(string fsn)
         {
             var weights = new[] { 5, 4, 3, 2, 7, 6, 5, 4, 3, 2 };
             var sum = 0;
@@ -71,10 +71,10 @@ namespace NumberValidator.Validators.NO
             {
                 sum += int.Parse(fsn[index].ToString()) * weights[index];
             }
-            sum = (11 - sum) % 11;
+            sum = 11 - (sum % 11);
 
 
-            return (sum.ToString());
+            return (sum);
         }
         private char GetGender(string fsn)
         {
@@ -124,8 +124,8 @@ namespace NumberValidator.Validators.NO
             {
                 year = year + 2000;
             }
-            else if (individual_digits >= 900 && 
-                individual_digits < 1000 && 
+            else if (individual_digits >= 900 &&
+                individual_digits < 1000 &&
                 year >= 40)
             {
                 year = year + 1900;
@@ -155,10 +155,11 @@ namespace NumberValidator.Validators.NO
                 throw new InvalidComponentException();
             }
 
-            if (fsn[fsn.Length - 2].Equals(Checkdigit1(fsn)) == false ||
-                fsn[fsn.Length - 1].Equals(Checkdigit2(fsn)) == false)
+            if (int.Parse(fsn[fsn.Length - 2].ToString()) != CheckDigit1(fsn) ||
+                int.Parse(fsn[fsn.Length - 1].ToString()) != CheckDigit2(fsn) )
             {
                 throw new InvalidChecksumException();
             }
         }
     }
+}
