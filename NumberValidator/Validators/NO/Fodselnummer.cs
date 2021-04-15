@@ -130,11 +130,6 @@ namespace NumberValidator.Validators.NO
             {
                 year = year + 1900;
             }
-            else
-            {
-                throw new InvalidComponentException();
-            }
-
 
             var dob = new DateTime(year, month, day);
 
@@ -160,11 +155,11 @@ namespace NumberValidator.Validators.NO
             }
 
             if (int.Parse(fsn[fsn.Length - 2].ToString()) != CheckDigit1(fsn))
-               
+
             {
                 throw new InvalidChecksumException();
             }
-            if  (int.Parse(fsn[fsn.Length - 1].ToString()) != CheckDigit2(fsn))
+            if (int.Parse(fsn[fsn.Length - 1].ToString()) != CheckDigit2(fsn))
             {
                 throw new InvalidChecksumException();
             }

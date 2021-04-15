@@ -60,7 +60,7 @@ namespace NumberValidator.Tests.NO.Fodselnummer
         
         [Fact]
         void FutureDateShouldBeInvalid()
-            => _sut.BirthdateInFuture("15102395088").Should().BeTrue();
+            => _sut.Invoking(_ => _.Validate("19052955747")).Should().Throw<InvalidComponentException>();
         
         [Fact]
         void DateShouldBeValid()
