@@ -168,12 +168,6 @@ namespace NumberValidator.Validators.NO
             {
                 throw new InvalidChecksumException();
             }
-            if (GetGender(fsn)!='F' &&
-               GetGender(fsn)!= 'M')
-            {
-                throw new InvalidComponentException();
-            }
-           
         }
     }
 }
