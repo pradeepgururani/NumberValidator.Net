@@ -1,20 +1,19 @@
-﻿using System;
-using FluentAssertions;
-using NumberValidator.Helpers;
+﻿using FluentAssertions;
+using NumberValidator.Validators.AT;
 using Xunit;
 
 namespace NumberValidator.Tests.AT
 {
-    public class BusinessidFixture
+    public class BusinessIdFixture
     {
-        private readonly Validators.AT.BUSINESSID _sut = new Validators.AT.BUSINESSID();
+        private readonly BusinessId _sut = new BusinessId();
 
         [Fact]
-        void ValidBusinesidShouldBeTrue()
+        void ValidBusinessidShouldBeTrue()
                 => _sut.IsValid("122119m").Should().BeTrue();
+
         [Fact]
         void InValidBusinessShouldBeFalse()
-           => _sut.IsValid("FN 122119m").Should().BeFalse();
-
+                => _sut.IsValid("FN 122119m").Should().BeFalse();
     }
 }
