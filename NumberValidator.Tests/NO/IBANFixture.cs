@@ -28,6 +28,5 @@ namespace NumberValidator.Tests.NO.IBAN
         [Fact]
         void ShouldBeInvalidIfKotonrContainsAlpha()
         => _sut.Invoking(_ => _.Validate("NO93860111179NO")).Should().Throw<InvalidFormatException>();
-
     }
 }

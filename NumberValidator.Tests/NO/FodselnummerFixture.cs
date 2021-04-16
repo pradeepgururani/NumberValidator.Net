@@ -56,8 +56,7 @@ namespace NumberValidator.Tests.NO.Fodselnummer
         [Fact]
         void ShouldBeInvalidForDayGreaterThan80()
            => _sut.Invoking(_ => _.Validate("81102395088")).Should().Throw<InvalidComponentException>();
-    
-        
+   
         [Fact]
         void FutureDateShouldBeInvalid()
             => _sut.Invoking(_ => _.Validate("19052955747")).Should().Throw<InvalidComponentException>();
@@ -65,8 +64,7 @@ namespace NumberValidator.Tests.NO.Fodselnummer
         [Fact]
         void DateShouldBeValid()
            => _sut.BirthdateInFuture("15108695088").Should().BeFalse();
-
-        
+ 
        [Fact]
         void CheckDigit1ShouldBeeight()
            => _sut.CheckDigit1("15108695088").Should().Be(8);
@@ -74,6 +72,5 @@ namespace NumberValidator.Tests.NO.Fodselnummer
         [Fact]
         void CheckDigit2ShouldBeeight()
        => _sut.CheckDigit2("15108695088").Should().Be(8);
-
     }
 }

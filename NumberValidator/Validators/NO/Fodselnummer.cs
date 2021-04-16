@@ -58,6 +58,7 @@ namespace NumberValidator.Validators.NO
             {
                 sum += int.Parse(fsn[index].ToString()) * weights[index];
             }
+
             sum = 11 - (sum % 11);
 
             return (sum);
@@ -71,11 +72,12 @@ namespace NumberValidator.Validators.NO
             {
                 sum += int.Parse(fsn[index].ToString()) * weights[index];
             }
-            sum = 11 - (sum % 11);
 
+            sum = 11 - (sum % 11);
 
             return (sum);
         }
+
         public char GetGender(string fsn)
         {
             fsn = fsn.Clean();
@@ -89,6 +91,7 @@ namespace NumberValidator.Validators.NO
                 return 'M';
             }
         }
+
         public bool BirthdateInFuture(string fsn)
         {
             var day = int.Parse(fsn.Substring(0, 2));
@@ -113,20 +116,20 @@ namespace NumberValidator.Validators.NO
                 year = year + 1900;
             }
             else if (individual_digits >= 500 &&
-                individual_digits < 750 &&
-                year > 54)
+                     individual_digits < 750 &&
+                     year > 54)
             {
                 year = year + 1800;
             }
             else if (individual_digits >= 500 &&
-                individual_digits < 1000 &&
-                year < 40)
+                     individual_digits < 1000 &&
+                     year < 40)
             {
                 year = year + 2000;
             }
             else if (individual_digits >= 900 &&
-                individual_digits < 1000 &&
-                year >= 40)
+                     individual_digits < 1000 &&
+                     year >= 40)
             {
                 year = year + 1900;
             }
@@ -135,6 +138,7 @@ namespace NumberValidator.Validators.NO
 
             return dob > DateTime.Today;
         }
+
         public void Validate(string fsn)
         {
             fsn = fsn.Clean();

@@ -41,15 +41,11 @@ namespace NumberValidator.Validators.NO
 
         private string ToKontonr(string iban)
         {
-            
-
             return (iban.Substring(4, 11));
         }
 
         public void Validate(string iban)
         {
-            
-        
             if (iban.Length != 15)
             {
                 throw new InvalidLengthException();
