@@ -52,7 +52,6 @@ namespace NumberValidator.Validators.NO
         public int CheckDigit1(string fsn)
         {
             var weights = new[] { 3, 7, 6, 1, 8, 9, 4, 5, 2 };
-
             var sum = 0;
             for (var index = 0; index < 9; index++)
             {
@@ -60,7 +59,6 @@ namespace NumberValidator.Validators.NO
             }
 
             sum = 11 - (sum % 11);
-
             return (sum);
         }
 
@@ -74,7 +72,6 @@ namespace NumberValidator.Validators.NO
             }
 
             sum = 11 - (sum % 11);
-
             return (sum);
         }
 
@@ -82,10 +79,12 @@ namespace NumberValidator.Validators.NO
         {
             fsn = fsn.Clean();
             var temp = int.Parse(fsn[8].ToString());
+
             if (temp % 2 == 0)
             {
                 return 'F';
             }
+
             else
             {
                 return 'M';
@@ -103,30 +102,36 @@ namespace NumberValidator.Validators.NO
             {
                 throw new InvalidComponentException();
             }
+
             if (day > 40)
             {
                 day = day - 40;
             }
+
             if (month > 40)
             {
                 month = month - 40;
             }
+
             if (individual_digits < 500)
             {
                 year = year + 1900;
             }
+
             else if (individual_digits >= 500 &&
                      individual_digits < 750 &&
                      year > 54)
             {
                 year = year + 1800;
             }
+
             else if (individual_digits >= 500 &&
                      individual_digits < 1000 &&
                      year < 40)
             {
                 year = year + 2000;
             }
+
             else if (individual_digits >= 900 &&
                      individual_digits < 1000 &&
                      year >= 40)
@@ -163,6 +168,7 @@ namespace NumberValidator.Validators.NO
             {
                 throw new InvalidChecksumException();
             }
+
             if (int.Parse(fsn[fsn.Length - 1].ToString()) != CheckDigit2(fsn))
             {
                 throw new InvalidChecksumException();
