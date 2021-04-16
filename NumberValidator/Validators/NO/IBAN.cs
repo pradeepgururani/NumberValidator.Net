@@ -40,8 +40,7 @@ namespace NumberValidator.Validators.NO
                 throw new InvalidComponentException();
             }
 
-            if(!ToKontonr(iban).IsDigits() ||
-                ToKontonr(iban).Length != 11)
+            if(!ToKontonr(iban).IsDigits())
             {
                 throw new InvalidFormatException();
             }

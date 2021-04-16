@@ -21,5 +21,13 @@ namespace NumberValidator.Tests.NO.IBAN
         void InValidIbanShouldBeFalse()
             => _sut.IsValid("GR1601101050000010547023795").Should().BeFalse();
 
+        [Fact]
+        void ShouldBeInvalidIfNotStartsWithNo()
+         => _sut.Invoking(_ => _.Validate("GR9386011117947")).Should().Throw<InvalidComponentException>();
+
+        [Fact]
+        void ShouldBeInvalidIfKotonrContainsAlpha()
+        => _sut.Invoking(_ => _.Validate("NO93860111179NO")).Should().Throw<InvalidFormatException>();
+
     }
 }
