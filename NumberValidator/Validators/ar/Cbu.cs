@@ -45,6 +45,13 @@ namespace NumberValidator.Validators.AR
             }
         }
 
+          public void Validate(string cbu)
+        {
+            cvr = cvr.Clean();
+
+            ValidateFormat(cbu);
+        }
+
          private int calc_check_digit(string cbu)
         {
         
@@ -90,19 +97,6 @@ namespace NumberValidator.Validators.AR
 
         }
 
-        public bool is_valid(cbu)
-        {
-            try
-            {
-                bool result = Validate(cbu);
-                return result;
-            }
-
-            catch (validationerror)
-            {
-                return false;
-            }
-
-        }
+       
     }
 }
