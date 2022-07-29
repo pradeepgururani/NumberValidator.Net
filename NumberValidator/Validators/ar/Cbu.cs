@@ -90,7 +90,7 @@ namespace NumberValidator.Validators.AR
                 throw new InvalidChecksumException();
             }
 
-            if (calc_check_digit(cbu[8..-1] != CBU[-1]))
+            if (calc_check_digit(cbu[8 ..-1] != CBU[-1]))
             {
                 throw new InvalidChecksumException();
             }
