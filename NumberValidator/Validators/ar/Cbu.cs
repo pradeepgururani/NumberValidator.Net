@@ -47,7 +47,7 @@ namespace NumberValidator.Validators.AR
 
           public void Validate(string cbu)
         {
-            cvr = cvr.Clean();
+            cbu = cbu.Clean();
 
             ValidateFormat(cbu);
         }
