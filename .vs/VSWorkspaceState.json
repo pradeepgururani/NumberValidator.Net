@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\NumberValidator",
+    "\\NumberValidator.Tests",
+    "\\NumberValidator.Tests\\AR",
+    "\\NumberValidator\\Validators",
+    "\\NumberValidator\\Validators\\ar"
+  ],
+  "SelectedNode": "\\NumberValidator\\Validators\\ar\\Cbu.cs",
+  "PreviewInSolutionExplorer": false
+}

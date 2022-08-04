@@ -2,6 +2,7 @@
 // # coding: utf-8
 // #
 // # Copyright (C) 2016 Luciano Rossi
+// # Copyright (C) 2022 Sudhanshu Pant
 // #
 // # This library is free software; you can redistribute it and/or
 // # modify it under the terms of the GNU Lesser General Public
@@ -30,7 +31,7 @@ using NumberValidator.Helpers;
 
 namespace NumberValidator.Validators.AR
 {
-    public class CBU : IValidator
+    public class cbu : IValidator
     {
         public bool IsValid(string cbu)
         {
@@ -45,55 +46,77 @@ namespace NumberValidator.Validators.AR
             }
         }
 
-          public void Validate(string cbu)
+        public void Validate(string a)
         {
-            cbu = cbu.Clean();
+            a = a.Clean();
 
-            ValidateFormat(cbu);
+            ValidateFormat(a);
+        
         }
 
-         private int calc_check_digit(string cbu)
+        
+        public string Splitter(int i, int j,string cbu)
+        {
+            
+            char[] cbu_array = new char[j];
+
+            for (int k = 0; k < j; k++)
+            {
+                cbu_array[k] = cbu[i];
+                i++;
+            }
+
+            string str = new string(cbu_array);
+
+            return str;
+        }
+
+        private int CalcCheckDigit(string a)
         {
         
-        char[] ch = cbu.ToCharArray();
-        Array.Reverse(ch, 0, cbu.Length);      
-        int sum = 0;
-        var weights = new[] { 3, 1, 7, 9 };
-        for (var index = 0; index < ch.Length; index++)
-        {
-            int n = ch[index ]-'0';
-            sum += n * weights[index%4];        
-        }
-        Console.WriteLine(sum.GetType());
-        int final = 10 - sum; 
-        Console.WriteLine(10%final);
-        Console.WriteLine();
+            char[] ch = a.ToCharArray();
+            Array.Reverse(ch, 0, a.Length);      
+            int sum = 0;
+            var weights = new[] { 3, 1, 7, 9 };
+            for (var index = 0; index < ch.Length; index++)
+            {
+                int n = ch[index ]-'0';
+                sum += n * weights[index%4];        
+            }
+            
+            
+            return(10-(sum%10));
+        
         }
 
-        public void Validate(string cpr)
-        {
-            cbu = cbu.Clean();
 
-            if (cpr.Length != 22)
+
+        public void ValidateFormat(string cbu)
+        {
+            
+
+            if (cbu.Length != 22)
             {
                 throw new InvalidLengthException();
             }
 
-            if (!cpr.IsDigits())
+            if (!cbu.IsDigits())
             {
                 throw new InvalidFormatException();
             }
 
 
-            if (calc_check_digit(cbu[..7] != CBU[7]))
+            if ((CalcCheckDigit(Splitter(0,7,cbu))) != (Convert.ToInt32(cbu[7]-'0')))
+            {
+                throw new InvalidChecksumException();
+                
+            }
+
+            if (CalcCheckDigit(Splitter(8, 21 - 8, cbu)) != Convert.ToInt32(cbu[cbu.Length - 1] - '0'))
             {
                 throw new InvalidChecksumException();
             }
 
-            if (calc_check_digit(cbu[8 ..-1] != CBU[-1]))
-            {
-                throw new InvalidChecksumException();
-            }
 
         }
 
