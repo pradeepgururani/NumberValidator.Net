@@ -82,5 +82,18 @@ namespace NumberValidator.Tests.NO.Fodselnummer
      => _sut.BirthdateInFuture("15105595077").Should().BeFalse();
 
 
+        [Fact]
+        void PastDateValid()
+     => _sut.BirthdateInFuture("26111594448").Should().BeFalse();
+
+        [Fact]
+        void ShouldBeValid()
+     => _sut.BirthdateInFuture("10048745364").Should().BeFalse();
+
+        [Fact]
+        void ShouldBeValidForYearGreaterThan40()
+     => _sut.BirthdateInFuture("10048744732").Should().BeFalse();
+
+
     }
 }
