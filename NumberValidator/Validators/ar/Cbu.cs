@@ -49,31 +49,24 @@ namespace NumberValidator.Validators.AR
         public void Validate(string a)
         {
             a = a.Clean();
-
-            ValidateFormat(a);
-        
+            ValidateFormat(a);    
         }
 
         
-        public string Splitter(int i, int j,string cbu)
+        public string ArraySlicing(int start_, int end_,string cbu)
         {
-            
             char[] cbu_array = new char[j];
-
-            for (int k = 0; k < j; k++)
+            for (int index = 0; index < end_; index++)
             {
-                cbu_array[k] = cbu[i];
-                i++;
+                cbu_array[index] = cbu[start_];
+                start_++;
             }
-
             string str = new string(cbu_array);
-
             return str;
         }
 
         private int CalcCheckDigit(string a)
         {
-        
             char[] ch = a.ToCharArray();
             Array.Reverse(ch, 0, a.Length);      
             int sum = 0;
@@ -83,18 +76,13 @@ namespace NumberValidator.Validators.AR
                 int n = ch[index ]-'0';
                 sum += n * weights[index%4];        
             }
-            
-            
-            return(10-(sum%10));
-        
+            return(10-(sum%10)); 
         }
 
 
 
         public void ValidateFormat(string cbu)
-        {
-            
-
+        {        
             if (cbu.Length != 22)
             {
                 throw new InvalidLengthException();
@@ -104,22 +92,17 @@ namespace NumberValidator.Validators.AR
             {
                 throw new InvalidFormatException();
             }
-
-
-            if ((CalcCheckDigit(Splitter(0,7,cbu))) != (Convert.ToInt32(cbu[7]-'0')))
+            
+            if ((CalcCheckDigit(ArraySlicing(0,7,cbu))) != (Convert.ToInt32(cbu[7]-'0')))
             {
                 throw new InvalidChecksumException();
                 
             }
 
-            if (CalcCheckDigit(Splitter(8, 21 - 8, cbu)) != Convert.ToInt32(cbu[cbu.Length - 1] - '0'))
+            if (CalcCheckDigit(ArraySlicing(8, 21 - 8, cbu)) != Convert.ToInt32(cbu[cbu.Length - 1] - '0'))
             {
                 throw new InvalidChecksumException();
             }
-
-
         }
-
-       
     }
 }
