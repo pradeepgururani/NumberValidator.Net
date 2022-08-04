@@ -3,7 +3,7 @@
 
 // Copyright (C) 2018 Ilya Vihtinsky
 // Copyright (C) 2018 Arthur de Jong
-// Copyright (C) 2020 Leon Sandøy
+// Copyright (C) 2020 Leon Sandï¿½y
 // Copyright (C) 2021 Krishna Israni
 
 // This library is free software; you can redistribute it and/or
@@ -21,8 +21,8 @@
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 // 02110-1301 USA
 
-// Fødselsnummer (Norwegian birth number, the national identity number).
-// The Fødselsnummer is an eleven-digit number that is built up of the date of
+// Fï¿½dselsnummer (Norwegian birth number, the national identity number).
+// The Fï¿½dselsnummer is an eleven-digit number that is built up of the date of
 // birth of the person, a serial number and two check digits.
 // More information:
 // * https://no.wikipedia.org/wiki/F%C3%B8dselsnummer
@@ -158,7 +158,7 @@ namespace NumberValidator.Validators.NO
                 throw new InvalidLengthException();
             }
 
-            if (BirthdateInFuture(fsn))
+            if (BirthdateInFuture(fsn)==true)
             {
                 throw new InvalidComponentException();
             }

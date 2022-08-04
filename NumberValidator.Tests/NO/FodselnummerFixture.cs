@@ -74,9 +74,13 @@ namespace NumberValidator.Tests.NO.Fodselnummer
        => _sut.CheckDigit2("15108695088").Should().Be(8);
 
         [Fact]
-        void Checkyearandundividuladijit()
+        void futuredateWillBeInvalid()
       => _sut.BirthdateInFuture("15103495077").Should().BeTrue();
 
-        
+        [Fact]
+        void PastDateWillBeValid()
+     => _sut.BirthdateInFuture("15105595077").Should().BeFalse();
+
+
     }
 }
