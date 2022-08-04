@@ -125,8 +125,7 @@ namespace NumberValidator.Validators.NO
                 year = year + 1800;
             }
 
-            else if (individual_digits >= 500 &&
-                     individual_digits < 1000 &&
+            else if (individual_digits < 1000 &&
                      year < 40)
             {
                 year = year + 2000;
