@@ -16,8 +16,7 @@ namespace NumberValidator.Tests.AR
         [Fact]
         void ShouldBeInvalidForLessThan22Digits()
            => Assert.Throws<InvalidLengthException>(() => _sut.Validate("28105909400904181301"));
-
-
+           
         [Fact]
         void ShouldBeInvalidForWrongChecksumTill7DoeNotEqualTODigit8()
            => Assert.Throws<InvalidChecksumException>(() => _sut.Validate("2850590840090418135201"));
