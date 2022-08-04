@@ -55,7 +55,7 @@ namespace NumberValidator.Validators.AR
         
         public string ArraySlicing(int start_, int end_,string cbu)
         {
-            char[] cbu_array = new char[j];
+            char[] cbu_array = new char[end_];
             for (int index = 0; index < end_; index++)
             {
                 cbu_array[index] = cbu[start_];
