@@ -39,7 +39,6 @@
 // * https://cpr.dk/
 
 using System;
-using System.Globalization;
 using NumberValidator.Helpers;
 
 namespace NumberValidator.Validators.DK
