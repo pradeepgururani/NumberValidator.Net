@@ -3,7 +3,7 @@ using System.Linq;
 using NumberValidator.Helpers;
 using System.Text.RegularExpressions;
 
-namespace NumberValidator.Validators.AADHAAR
+namespace NumberValidator.Validators.IN
 {
     public class AADHAAR : IValidator
     {
@@ -19,6 +19,7 @@ namespace NumberValidator.Validators.AADHAAR
                 return false;
             }
         }
+
         public void Validate(string aadhaar)
         {
             String aadhaarPattern = @"^[2-9][0-9]{11}$";
@@ -27,10 +28,12 @@ namespace NumberValidator.Validators.AADHAAR
             {
                 throw new InvalidLengthException();
             }
+
             if (aadhaar.SequenceEqual(aadhaar.Reverse()))
             {
                 throw new InvalidFormatException();
             }
+
             Regex aadhaarRegex = new Regex(aadhaarPattern);
             if (!aadhaarRegex.IsMatch(aadhaar))
             {

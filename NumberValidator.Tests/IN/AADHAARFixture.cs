@@ -2,12 +2,11 @@
 using FluentAssertions;
 using NumberValidator.Helpers;
 
-
-namespace NumberValidator.Tests.AADHAAR
+namespace NumberValidator.Tests.IN
 {
     public class AADHAARFixture
     {
-        private readonly Validators.AADHAAR.AADHAAR _sut = new Validators.AADHAAR.AADHAAR();
+        private readonly Validators.IN.AADHAAR _sut = new Validators.IN.AADHAAR();
         [Fact]
         void ShouldBeInvalidForLessThan12Digits()
             => Assert.Throws<InvalidLengthException>(() => _sut.Validate("22345678"));
