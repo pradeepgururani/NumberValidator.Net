@@ -22,7 +22,7 @@ namespace NumberValidator.Validators.IN
 
         public void Validate(string aadhaar)
         {
-            String aadhaarPattern = @"^[2-9][0-9]{11}$";
+            var aadhaarPattern = @"^[2-9][0-9]{11}$";
 
             if (aadhaar.Length != 12)
             {
@@ -34,7 +34,8 @@ namespace NumberValidator.Validators.IN
                 throw new InvalidFormatException();
             }
 
-            Regex aadhaarRegex = new Regex(aadhaarPattern);
+            var aadhaarRegex = new Regex(aadhaarPattern);
+
             if (!aadhaarRegex.IsMatch(aadhaar))
             {
                 throw new InvalidFormatException();

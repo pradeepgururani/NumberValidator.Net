@@ -7,6 +7,7 @@ namespace NumberValidator.Tests.IN
     public class AadhaarFixture
     {
         private readonly Validators.IN.Aadhaar _sut = new Validators.IN.Aadhaar();
+
         [Fact]
         void ShouldBeInvalidForLessThan12Digits()
             => Assert.Throws<InvalidLengthException>(() => _sut.Validate("22345678"));
