@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace NumberValidator.Validators.IN
 {
-    public class AADHAAR : IValidator
+    public class Aadhaar : IValidator
     {
         public bool IsValid(string aadhaar)
         {

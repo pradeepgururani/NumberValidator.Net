@@ -4,9 +4,9 @@ using NumberValidator.Helpers;
 
 namespace NumberValidator.Tests.IN
 {
-    public class AADHAARFixture
+    public class AadhaarFixture
     {
-        private readonly Validators.IN.AADHAAR _sut = new Validators.IN.AADHAAR();
+        private readonly Validators.IN.Aadhaar _sut = new Validators.IN.Aadhaar();
         [Fact]
         void ShouldBeInvalidForLessThan12Digits()
             => Assert.Throws<InvalidLengthException>(() => _sut.Validate("22345678"));
