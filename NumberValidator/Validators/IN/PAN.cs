@@ -4,6 +4,7 @@ using NumberValidator.Helpers;
 using NumberValidator.Validators.AD;
 using System.Text.RegularExpressions;
 
+
 namespace NumberValidator.Validators.PAN
 {
     public class PAN : IValidator
