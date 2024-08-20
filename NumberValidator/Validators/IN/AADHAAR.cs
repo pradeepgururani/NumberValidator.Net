@@ -5,7 +5,7 @@ namespace NumberValidator.Validators
 {
     public class AadhaarValidator : IValidator
     {
-        private static readonly Regex AadhaarRegex = new(@"^[1-9][0-9]{11}$");
+        private static readonly Regex AadhaarRegex = new Regex(@"^[1-9][0-9]{11}$");
 
         public bool IsValid(string aadhaar)
         {
