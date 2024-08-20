@@ -38,6 +38,8 @@ namespace NumberValidator.Validators.IN
         {
             gst = gst.RemoveSpace();
 
+            string gstPattern = @"^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z][0-9A-Z]{3}$";
+
             if (gst.Length != 15)
             {
                 throw new InvalidLengthException();
@@ -48,7 +50,9 @@ namespace NumberValidator.Validators.IN
                 throw new InvalidFormatException();
             }
 
-            if (!Regex.IsMatch(gst, @"^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z][0-9A-Z]{3}$"))
+            Regex gstRegex = new Regex(gstPattern);
+
+            if (!gstRegex.IsMatch(gst))
             {
                 throw new InvalidFormatException();
             }

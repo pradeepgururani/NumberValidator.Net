@@ -32,7 +32,7 @@ namespace NumberValidator.Helpers
 
             var cleanedInput = Regex.Replace(input, @"[\s-]", "");
 
-            return cleanedInput.ToUpper().Trim();
+            return cleanedInput;
         }
     }
 }

@@ -24,6 +24,8 @@ namespace NumberValidator.Validators.IN
         {
             pan = pan.RemoveSpace();
 
+            string panPattern = @"^[A-Z]{5}\d{4}[A-Z]$";
+
             if (pan.Length != 10)
             {
                 throw new InvalidLengthException();
@@ -34,7 +36,9 @@ namespace NumberValidator.Validators.IN
                 throw new InvalidComponentException();
             }
 
-            if (!Regex.IsMatch(pan, @"^[A-Z]{5}[0-9]{4}[A-Z]$"))
+            Regex panRegex = new Regex(panPattern);
+
+            if (!panRegex.IsMatch(pan))
             {
                 throw new InvalidFormatException();
             }
