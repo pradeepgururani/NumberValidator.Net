@@ -5,3 +5,4 @@ bin/
 .idea/
 NumberValidator/obj/*
 NumberValidator/bin/*
+/.vs

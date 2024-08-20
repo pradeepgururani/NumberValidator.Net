@@ -1,13 +1,15 @@
 ﻿using System;
 using FluentAssertions;
 using NumberValidator.Helpers;
+using NumberValidator.Validators.IN;
 using Xunit;
 
-namespace NumberValidator.Tests.PAN
+namespace NumberValidator.Tests.IN
 {
     public class PANFixture
     {
-        private readonly Validators.PAN.PAN _sut = new Validators.PAN.PAN();
+        private readonly PAN _sut = new PAN();
+
         [Fact]
         void ShouldBeInvalidForLessThan10Digits()
             => Assert.Throws<InvalidLengthException>(() => _sut.Validate("012345678"));
@@ -18,10 +20,14 @@ namespace NumberValidator.Tests.PAN
 
         [Fact]
         void ShouldBeInvalidFormatPatternNotFollowed()
-     => Assert.Throws<InvalidFormatException>(() => _sut.Validate("ABCD1234EF"));
+            => Assert.Throws<InvalidFormatException>(() => _sut.Validate("ABCD1234EF"));
 
         [Fact]
         void ShouldBeValidForOther()
             => _sut.IsValid("ACUPA7085R").Should().BeTrue();
+
+        [Fact]
+        void ShouldBeValidForOthers()
+            => _sut.IsValid("ABCPA-708 5-R").Should().BeTrue();
     }
 }
