@@ -6,12 +6,12 @@ namespace NumberValidator.Helpers
     {
         public static void Validate(string input)
         {
-            int sum = 0;
+            var sum = 0;
             bool alternate = false;
 
-            for (int i = input.Length - 1; i >= 0; i--)
+            for (var i = input.Length - 1; i >= 0; i--)
             {
-                int n = int.Parse(input[i].ToString());
+                var n = int.Parse(input[i].ToString());
 
                 if (alternate)
                 {

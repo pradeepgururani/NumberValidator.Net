@@ -23,7 +23,7 @@ namespace NumberValidator.Helpers
             return digitsRegularExpression.Match(input).Success;
         }
 
-        public static string RemoveSpace(this string input)
+        public static string Compact(this string input)
         {
             if (string.IsNullOrEmpty(input))
             {

@@ -35,7 +35,7 @@ namespace NumberValidator.Validators.IN
 
         public void Validate(string epic)
         {
-            epic= epic.RemoveSpace();
+            epic= epic.Compact();
 
             if (epic.Length != 10)
             {

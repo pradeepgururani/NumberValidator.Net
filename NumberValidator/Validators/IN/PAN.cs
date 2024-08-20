@@ -22,7 +22,7 @@ namespace NumberValidator.Validators.IN
 
         public void Validate(string pan)
         {
-            pan = pan.RemoveSpace();
+            pan = pan.Compact();
 
             if (pan.Length != 10)
             {
