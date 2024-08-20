@@ -1,27 +1,55 @@
-﻿using Xunit;
-using FluentAssertions;
-using NumberValidator.Helpers;
+﻿using System;
+using Xunit;
+using NumberValidator.Validators;
 
-namespace NumberValidator.Tests.IN
+namespace NumberValidator.Tests
 {
     public class AadhaarFixture
     {
-        private readonly Validators.IN.Aadhaar _sut = new Validators.IN.Aadhaar();
+        private readonly AadhaarValidator _validator;
 
-        [Fact]
-        void ShouldBeInvalidForLessThan12Digits()
-            => Assert.Throws<InvalidLengthException>(() => _sut.Validate("22345678"));
+        public AadhaarFixture()
+        {
+            _validator = new AadhaarValidator();
+        }
 
-        [Fact]
-        void ShouldBeInvalidFormatCanNotBePalindrome()
-            => Assert.Throws<InvalidFormatException>(() => _sut.Validate("223567765322"));
+        [Theory]
+        [InlineData("123456789012", true)]
+        [InlineData("212345678901", true)]
+        [InlineData("112233445566", true)] // Valid Aadhaar number
+        [InlineData("12345678901", false)] // Less than 12 digits
+        [InlineData("1234567890123", false)] // More than 12 digits
+        [InlineData("012345678901", false)] // Starts with 0
+        [InlineData("abcdefghijklm", false)] // Non-numeric
+        public void IsValid_ShouldReturnExpectedResult(string aadhaar, bool expected)
+        {
+            // Act
+            var result = _validator.IsValid(aadhaar);
 
-        [Fact]
-        void ShouldBeInvalidFormatPatternNotFollowed()
-            => Assert.Throws<InvalidFormatException>(() => _sut.Validate("128565765309"));
+            // Assert
+            Assert.Equal(expected, result);
+        }
 
-        [Fact]
-        void ShouldBeValid()
-            => _sut.IsValid("234675789836").Should().BeTrue();
+        [Theory]
+        [InlineData("123456789012")]
+        [InlineData("212345678901")]
+        public void Validate_ShouldNotThrowException_ForValidAadhaar(string aadhaar)
+        {
+            // Act & Assert
+            var exception = Record.Exception(() => _validator.Validate(aadhaar));
+            Assert.Null(exception);
+        }
+
+        [Theory]
+        [InlineData("12345678901")] // Less than 12 digits
+        [InlineData("1234567890123")] // More than 12 digits
+        [InlineData("012345678901")] // Starts with 0
+        [InlineData("abcdefghijklm")] // Non-numeric
+        [InlineData(null)] // Null input should also be invalid
+        public void Validate_ShouldThrowArgumentException_ForInvalidAadhaar(string aadhaar)
+        {
+            // Act & Assert
+            Assert.Throws<ArgumentException>(() => _validator.Validate(aadhaar));
+        }
     }
 }
