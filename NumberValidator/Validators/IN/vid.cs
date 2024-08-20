@@ -56,10 +56,15 @@ namespace VidHandling
 
         public static string GenerateValidVid()
         {
-            var rand = new Random();
-            var baseNumber = rand.Next(2, 10).ToString() + new string(Enumerable.Range(0, 14).Select(_ => rand.Next(0, 10).ToString()[0]).ToArray());
-            var checksumDigit = Verhoeff.CalculateChecksum(baseNumber);
-            return baseNumber + checksumDigit.ToString();
+            string vid;
+            do
+            {
+                var rand = new Random();
+                var baseNumber = rand.Next(2, 10).ToString() + new string(Enumerable.Range(0, 14).Select(_ => rand.Next(0, 10).ToString()[0]).ToArray());
+                var checksumDigit = Verhoeff.CalculateChecksum(baseNumber);
+                vid = baseNumber + checksumDigit.ToString();
+            } while (IsPalindrome(vid));
+            return vid;
         }
     }
 
