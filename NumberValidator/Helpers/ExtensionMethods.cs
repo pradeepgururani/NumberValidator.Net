@@ -22,5 +22,17 @@ namespace NumberValidator.Helpers
 
             return digitsRegularExpression.Match(input).Success;
         }
+
+        public static string RemoveSpace(this  string input)
+        {
+            if (string.IsNullOrEmpty(input))
+            {
+                return string.Empty;
+            }
+
+            var cleanedInput = Regex.Replace(input, @"[\s-]", "");
+
+            return cleanedInput;
+        }
     }
 }
