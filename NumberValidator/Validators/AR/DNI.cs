@@ -13,16 +13,11 @@ Each DNI contains 7 or 8 digits
 
 
 
-
-using System;
-using System.Globalization;
 using NumberValidator.Helpers;
-using System.Text.RegularExpressions;
-using NumberValidator.Validators.PAN;
 
 namespace NumberValidator.Validators.AR
 {
-     public class DNI : IValidator
+    public class DNI : IValidator
     {
         public bool IsValid(string dni)
         {
@@ -35,27 +30,22 @@ namespace NumberValidator.Validators.AR
             {
                 return false;
             }
-
         }
 
-        public void  Validate(string dni)
+        public void Validate(string dni)
         {
-          dni=dni.Clean();
+            dni = dni.Clean();
 
-            if (dni.Length != 7  || dni.Length != 8)
-            { 
+            if (dni.Length != 7 || dni.Length != 8)
+            {
                 throw new InvalidLengthException();
             }
+
             if (!dni.IsDigits())
             {
                 throw new InvalidFormatException();
-             }
-         
-              
-           
+            }
         }
-
-        
-     }
+    }
 }
 
