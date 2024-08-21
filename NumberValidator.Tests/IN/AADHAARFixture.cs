@@ -36,12 +36,15 @@ namespace NumberValidator.Tests
             {
                 "12345678901",    // Too short
                 "1234567890123",  // Too long
-                "012345678901",   // Valid format, but check if your system considers it valid or not
                 "abcdefghijklm",  // Non-numeric
                 "",               // Empty string
                 null              // Null
             };
 
+            foreach (var aadhaar in invalidAadhaars)
+            {
+                Assert.False(_validator.IsValid(aadhaar));
+            }
         }
 
         [Fact]
@@ -66,7 +69,6 @@ namespace NumberValidator.Tests
             {
                 "12345678901",    // Too short
                 "1234567890123",  // Too long
-                "012345678901",   // Valid format, but check if your system considers it valid or not
                 "abcdefghijklm",  // Non-numeric
                 "",               // Empty string
                 null              // Null
@@ -74,7 +76,7 @@ namespace NumberValidator.Tests
 
             foreach (var aadhaar in invalidAadhaars)
             {
-                if (aadhaar == null || !string.IsNullOrWhiteSpace(aadhaar) && !new AadhaarValidator().IsValid(aadhaar))
+                if (aadhaar == null || !string.IsNullOrWhiteSpace(aadhaar))
                 {
                     Assert.Throws<FormatException>(() => _validator.Validate(aadhaar));
                 }
