@@ -1,26 +1,26 @@
 using Xunit;
-using VidHandling;
+using NumberValidator; // Add this namespace reference
 
-namespace VidHandling.Tests
+namespace NumberValidator.Tests
 {
     public class VIDFixture
     {
         [Fact]
         public void LessThan16Digits_ThrowsInvalidFormatException()
         {
-            Assert.Throws<InvalidFormatException>(() => Vid.Validate("12345678901234"));
+            Assert.Throws<NumberValidator.InvalidFormatException>(() => Vid.Validate("12345678901234"));
         }
 
         [Fact]
         public void Palindrome_ThrowsInvalidFormatException()
         {
-            Assert.Throws<InvalidFormatException>(() => Vid.Validate("1234567890123456"));
+            Assert.Throws<NumberValidator.InvalidFormatException>(() => Vid.Validate("1234567890123456"));
         }
 
         [Fact]
         public void InvalidPattern_ThrowsInvalidFormatException()
         {
-            Assert.Throws<InvalidFormatException>(() => Vid.Validate("0123456789012345"));
+            Assert.Throws<NumberValidator.InvalidFormatException>(() => Vid.Validate("0123456789012345"));
         }
 
         [Fact]
@@ -28,7 +28,7 @@ namespace VidHandling.Tests
         {
             var validVid = Vid.GenerateValidVid();
             var invalidVid = validVid.Substring(0, 15) + (validVid[15] == '0' ? '1' : (char)(validVid[15] - 1));
-            Assert.Throws<InvalidChecksumException>(() => Vid.Validate(invalidVid));
+            Assert.Throws<NumberValidator.InvalidChecksumException>(() => Vid.Validate(invalidVid));
         }
 
         [Fact]
