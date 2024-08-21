@@ -12,10 +12,8 @@ namespace VidHandling
     {
         private static readonly Regex VidRegex = new Regex(@"^[2-9][0-9]{15}$");
 
-        public static string Compact(string number)
-        {
-            return number?.Replace(" ", "").Replace("-", "").Trim() ?? string.Empty;
-        }
+        public static string Compact(string number) =>
+            number?.Replace(" ", "").Replace("-", "").Trim() ?? string.Empty;
 
         public static string Validate(string number)
         {
@@ -55,11 +53,8 @@ namespace VidHandling
             return $"XXXX XXXX XXXX {compactedNumber.Substring(12)}";
         }
 
-        private static bool IsPalindrome(string number)
-        {
-            var reversed = new string(number.Reverse().ToArray());
-            return number == reversed;
-        }
+        private static bool IsPalindrome(string number) =>
+            number == new string(number.Reverse().ToArray());
 
         public static string GenerateValidVid()
         {
@@ -129,6 +124,26 @@ namespace VidHandling
             }
 
             return Inverse[c];
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            try
+            {
+                var vid = Vid.GenerateValidVid();
+                Console.WriteLine($"Generated VID: {vid}");
+                Console.WriteLine($"Formatted VID: {Vid.Format(vid)}");
+                Console.WriteLine($"Masked VID: {Vid.Mask(vid)}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+
+            Console.ReadLine();
         }
     }
 }
