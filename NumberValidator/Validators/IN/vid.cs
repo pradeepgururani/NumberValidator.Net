@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace VidHandling
+namespace NumberValidator
 {
     public class InvalidLengthException : Exception { }
     public class InvalidFormatException : Exception { }
@@ -12,20 +12,20 @@ namespace VidHandling
     {
         private static readonly Regex VidRegex = new Regex(@"^[2-9][0-9]{15}$");
 
-        public static string Compact(string number) =>
+        public static string Clear(string number) =>
             number?.Replace(" ", "").Replace("-", "").Trim() ?? string.Empty;
 
         public static string Validate(string number)
         {
-            var compactedNumber = Compact(number);
+            var cleanedNumber = Clear(number);
 
-            if (compactedNumber.Length != 16 || !VidRegex.IsMatch(compactedNumber) || IsPalindrome(compactedNumber))
+            if (cleanedNumber.Length != 16 || !VidRegex.IsMatch(cleanedNumber) || IsPalindrome(cleanedNumber))
             {
                 throw new InvalidFormatException();
             }
 
-            Verhoeff.Validate(compactedNumber);
-            return compactedNumber;
+            VerhoeffAlgorithm.Validate(cleanedNumber);
+            return cleanedNumber;
         }
 
         public static bool IsValid(string number)
@@ -43,14 +43,14 @@ namespace VidHandling
 
         public static string Format(string number)
         {
-            var compactedNumber = Compact(number);
-            return $"{compactedNumber.Substring(0, 4)} {compactedNumber.Substring(4, 4)} {compactedNumber.Substring(8, 4)} {compactedNumber.Substring(12)}";
+            var cleanedNumber = Clear(number);
+            return $"{cleanedNumber.Substring(0, 4)} {cleanedNumber.Substring(4, 4)} {cleanedNumber.Substring(8, 4)} {cleanedNumber.Substring(12)}";
         }
 
         public static string Mask(string number)
         {
-            var compactedNumber = Compact(number);
-            return $"XXXX XXXX XXXX {compactedNumber.Substring(12)}";
+            var cleanedNumber = Clear(number);
+            return $"XXXX XXXX XXXX {cleanedNumber.Substring(12)}";
         }
 
         private static bool IsPalindrome(string number) =>
@@ -58,28 +58,28 @@ namespace VidHandling
 
         public static string GenerateValidVid()
         {
-            string vid;
+            var validVid = string.Empty;
             do
             {
-                vid = GenerateRandomVid();
-            } while (IsPalindrome(vid) || !IsValid(vid));
-            return vid;
+                validVid = GenerateRandomVid();
+            } while (IsPalindrome(validVid) || !IsValid(validVid));
+            return validVid;
         }
 
         private static string GenerateRandomVid()
         {
-            var rand = new Random();
-            var baseNumber = rand.Next(2, 10).ToString() +
-                string.Concat(Enumerable.Range(0, 14).Select(_ => rand.Next(0, 10).ToString()));
+            var randomGenerator = new Random();
+            var baseNumber = randomGenerator.Next(2, 10).ToString() +
+                string.Concat(Enumerable.Range(0, 14).Select(_ => randomGenerator.Next(0, 10).ToString()));
 
-            var checksum = Verhoeff.CalculateChecksum(baseNumber);
+            var checksum = VerhoeffAlgorithm.CalculateChecksum(baseNumber);
             return baseNumber + checksum;
         }
     }
 
-    public static class Verhoeff
+    public static class VerhoeffAlgorithm
     {
-        private static readonly int[,] D = {
+        private static readonly int[,] MultiplicationTable = {
             {0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
             {1, 2, 3, 4, 0, 6, 7, 8, 9, 5},
             {2, 3, 4, 0, 1, 7, 8, 9, 5, 6},
@@ -92,7 +92,7 @@ namespace VidHandling
             {9, 8, 7, 6, 5, 4, 3, 2, 1, 0}
         };
 
-        private static readonly int[,] P = {
+        private static readonly int[,] PermutationTable = {
             {0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
             {1, 5, 7, 6, 4, 8, 9, 0, 3, 2},
             {5, 8, 0, 3, 7, 9, 6, 1, 4, 2},
@@ -103,7 +103,7 @@ namespace VidHandling
             {7, 0, 4, 6, 9, 3, 1, 2, 5, 8}
         };
 
-        private static readonly int[] Inverse = { 0, 4, 3, 2, 1, 5, 6, 7, 8, 9 };
+        private static readonly int[] InverseTable = { 0, 4, 3, 2, 1, 5, 6, 7, 8, 9 };
 
         public static void Validate(string number)
         {
@@ -116,14 +116,14 @@ namespace VidHandling
         public static int CalculateChecksum(string number)
         {
             var reversedDigits = number.Reverse().Select(digit => int.Parse(digit.ToString())).ToArray();
-            int c = 0;
+            var checksum = 0;
 
-            for (int i = 0; i < reversedDigits.Length; i++)
+            for (var index = 0; index < reversedDigits.Length; index++)
             {
-                c = D[c, P[(i + 1) % 8, reversedDigits[i]]];
+                checksum = MultiplicationTable[checksum, PermutationTable[(index + 1) % 8, reversedDigits[index]]];
             }
 
-            return Inverse[c];
+            return InverseTable[checksum];
         }
     }
 
@@ -133,10 +133,10 @@ namespace VidHandling
         {
             try
             {
-                var vid = Vid.GenerateValidVid();
-                Console.WriteLine($"Generated VID: {vid}");
-                Console.WriteLine($"Formatted VID: {Vid.Format(vid)}");
-                Console.WriteLine($"Masked VID: {Vid.Mask(vid)}");
+                var generatedVid = Vid.GenerateValidVid();
+                Console.WriteLine($"Generated VID: {generatedVid}");
+                Console.WriteLine($"Formatted VID: {Vid.Format(generatedVid)}");
+                Console.WriteLine($"Masked VID: {Vid.Mask(generatedVid)}");
             }
             catch (Exception ex)
             {

@@ -3,13 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace NumberValidator.Validators
 {
-    public interface IValidator
-    {
-        bool IsValid(string input);
-        void Validate(string input);
-    }
-
-    public class AadhaarValidator : IValidator
+    public class AadhaarValidator
     {
         private static readonly Regex AadhaarRegex = new Regex(@"^[1-9][0-9]{11}$");
 
