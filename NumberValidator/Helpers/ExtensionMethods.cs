@@ -23,7 +23,7 @@ namespace NumberValidator.Helpers
             return digitsRegularExpression.Match(input).Success;
         }
 
-        public static string Compact(this string input)
+        public static string RemoveSpace(this  string input)
         {
             if (string.IsNullOrEmpty(input))
             {
@@ -32,7 +32,7 @@ namespace NumberValidator.Helpers
 
             var cleanedInput = Regex.Replace(input, @"[\s-]", "");
 
-            return cleanedInput.ToUpper().Trim();
+            return cleanedInput;
         }
     }
 }
