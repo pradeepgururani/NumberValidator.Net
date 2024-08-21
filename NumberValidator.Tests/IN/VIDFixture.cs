@@ -6,88 +6,51 @@ namespace VidHandling.Tests
     public class VIDFixture
     {
         [Fact]
-        public void ShouldBeInvalidForLessThan16Digits()
+        public void LessThan16Digits_ThrowsInvalidFormatException()
         {
-            // Arrange
-            string vidNumber = "12345678901234"; // 14 digits
-
-            // Act and Assert
-            Assert.Throws<InvalidFormatException>(() => Vid.Validate(vidNumber));
+            Assert.Throws<InvalidFormatException>(() => Vid.Validate("12345678901234"));
         }
 
         [Fact]
-        public void ShouldBeInvalidFormatCannotBePalindrome()
+        public void Palindrome_ThrowsInvalidFormatException()
         {
-            // Arrange
-            string vidNumber = "1234567890123456"; // 16 digits palindrome
-
-            // Act and Assert
-            Assert.Throws<InvalidFormatException>(() => Vid.Validate(vidNumber));
+            Assert.Throws<InvalidFormatException>(() => Vid.Validate("1234567890123456"));
         }
 
         [Fact]
-        public void ShouldBeInvalidFormatPatternNotFollowed()
+        public void InvalidPattern_ThrowsInvalidFormatException()
         {
-            // Arrange
-            string vidNumber = "0123456789012345"; // Starts with 0, which is not allowed
-
-            // Act and Assert
-            Assert.Throws<InvalidFormatException>(() => Vid.Validate(vidNumber));
+            Assert.Throws<InvalidFormatException>(() => Vid.Validate("0123456789012345"));
         }
 
         [Fact]
-        public void ShouldBeInvalidChecksum()
+        public void InvalidChecksum_ThrowsInvalidChecksumException()
         {
-            // Arrange
-            string validVid = Vid.GenerateValidVid();
-
-            // Modify the last digit to ensure an invalid checksum
-            char lastDigit = validVid[validVid.Length - 1];
-            char invalidLastDigit = lastDigit == '0' ? '1' : (char)(lastDigit - 1);
-            string invalidVid = validVid.Substring(0, 15) + invalidLastDigit;
-
-            // Act and Assert
+            var validVid = Vid.GenerateValidVid();
+            var invalidVid = validVid.Substring(0, 15) + (validVid[15] == '0' ? '1' : (char)(validVid[15] - 1));
             Assert.Throws<InvalidChecksumException>(() => Vid.Validate(invalidVid));
         }
 
         [Fact]
-        public void ShouldBeValid()
+        public void ValidVid_DoesNotThrowException()
         {
-            // Arrange
-            string vidNumber = Vid.GenerateValidVid();
-
-            // Act
-            var exception = Record.Exception(() => Vid.Validate(vidNumber));
-
-            // Assert
-            Assert.Null(exception); // Should not throw an exception
+            var vidNumber = Vid.GenerateValidVid();
+            Assert.Null(Record.Exception(() => Vid.Validate(vidNumber)));
         }
 
-
-
         [Fact]
-        public void ShouldFormatCorrectly()
+        public void Format_CorrectlyFormatsVid()
         {
-            // Arrange
-            string vidNumber = Vid.GenerateValidVid();
-
-            // Act
-            string formattedVid = Vid.Format(vidNumber);
-
-            // Assert
+            var vidNumber = Vid.GenerateValidVid();
+            var formattedVid = Vid.Format(vidNumber);
             Assert.Matches(@"^\d{4} \d{4} \d{4} \d{4}$", formattedVid);
         }
 
         [Fact]
-        public void ShouldMaskCorrectly()
+        public void Mask_CorrectlyMasksVid()
         {
-            // Arrange
-            string vidNumber = Vid.GenerateValidVid();
-
-            // Act
-            string maskedVid = Vid.Mask(vidNumber);
-
-            // Assert
+            var vidNumber = Vid.GenerateValidVid();
+            var maskedVid = Vid.Mask(vidNumber);
             Assert.Matches(@"^XXXX XXXX XXXX \d{4}$", maskedVid);
         }
     }

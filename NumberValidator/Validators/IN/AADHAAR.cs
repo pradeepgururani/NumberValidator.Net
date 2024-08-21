@@ -22,14 +22,7 @@ namespace NumberValidator.Validators
 
         public void Validate(string aadhaar)
         {
-            // Check if aadhaar is null
-            if (aadhaar == null)
-            {
-                throw new ArgumentException("Aadhaar number is invalid.");
-            }
-
-            // Check length and regex pattern
-            if (aadhaar.Length != 12 || !AadhaarRegex.IsMatch(aadhaar))
+            if (string.IsNullOrEmpty(aadhaar) || !AadhaarRegex.IsMatch(aadhaar))
             {
                 throw new ArgumentException("Aadhaar number is invalid.");
             }
