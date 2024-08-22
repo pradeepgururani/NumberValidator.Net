@@ -1,8 +1,8 @@
 ﻿using System;
 using Xunit;
-using NumberValidator.Validators;
+using NumberValidator.Validators.IN;
 
-namespace NumberValidator.Tests
+namespace NumberValidator.Tests.IN
 {
     public class AadhaarFixture
     {
@@ -22,7 +22,6 @@ namespace NumberValidator.Tests
                 "212345678901",
                 "112233445566"
             };
-
             foreach (var aadhaar in validAadhaars)
             {
                 Assert.True(_validator.IsValid(aadhaar));
@@ -40,7 +39,6 @@ namespace NumberValidator.Tests
                 "",               // Empty string
                 null              // Null
             };
-
             foreach (var aadhaar in invalidAadhaars)
             {
                 Assert.False(_validator.IsValid(aadhaar));
@@ -55,7 +53,6 @@ namespace NumberValidator.Tests
                 "123456789012",
                 "212345678901"
             };
-
             foreach (var aadhaar in validAadhaars)
             {
                 Assert.Null(Record.Exception(() => _validator.Validate(aadhaar)));
@@ -73,7 +70,6 @@ namespace NumberValidator.Tests
                 "",               // Empty string
                 null              // Null
             };
-
             foreach (var aadhaar in invalidAadhaars)
             {
                 Assert.Throws<FormatException>(() => _validator.Validate(aadhaar));

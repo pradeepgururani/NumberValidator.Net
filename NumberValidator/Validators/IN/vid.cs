@@ -2,16 +2,15 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace NumberValidator
+namespace NumberValidator.Validators.IN
 {
-    public static class Vid
+    public class Vid : IValidator
     {
-        private static readonly Regex vidRegex = new Regex(@"^[2-9][0-9]{15}$");
+        private readonly Regex vidRegex = new Regex(@"^[2-9][0-9]{15}$");
 
-        public static string Clear(string number) =>
+        public string Clear(string number) =>
             number?.Replace(" ", "").Replace("-", "").Trim() ?? string.Empty;
-
-        public static string Validate(string number)
+        public void Validate(string number)
         {
             var cleanedNumber = Clear(number);
 
@@ -21,10 +20,8 @@ namespace NumberValidator
             }
 
             VerhoeffAlgorithm.Validate(cleanedNumber);
-            return cleanedNumber;
         }
-
-        public static bool IsValid(string number)
+        public bool IsValid(string number)
         {
             try
             {
@@ -36,23 +33,19 @@ namespace NumberValidator
                 return false;
             }
         }
-
-        public static string Format(string number)
+        public string Format(string number)
         {
             var cleanedNumber = Clear(number);
             return $"{cleanedNumber.Substring(0, 4)} {cleanedNumber.Substring(4, 4)} {cleanedNumber.Substring(8, 4)} {cleanedNumber.Substring(12)}";
         }
-
-        public static string Mask(string number)
+        public string Mask(string number)
         {
             var cleanedNumber = Clear(number);
             return $"XXXX XXXX XXXX {cleanedNumber.Substring(12)}";
         }
-
-        private static bool IsPalindrome(string number) =>
+        private bool IsPalindrome(string number) =>
             number == new string(number.Reverse().ToArray());
-
-        public static string GenerateValidVid()
+        public string GenerateValidVid()
         {
             var validVid = string.Empty;
             do
@@ -61,8 +54,7 @@ namespace NumberValidator
             } while (IsPalindrome(validVid) || !IsValid(validVid));
             return validVid;
         }
-
-        private static string GenerateRandomVid()
+        private string GenerateRandomVid()
         {
             var randomGenerator = new Random();
             var baseNumber = randomGenerator.Next(2, 10).ToString() +
@@ -72,7 +64,6 @@ namespace NumberValidator
             return baseNumber + checksum;
         }
     }
-
     public static class VerhoeffAlgorithm
     {
         private static readonly int[,] MultiplicationTable = {
@@ -87,7 +78,6 @@ namespace NumberValidator
             {8, 7, 6, 5, 9, 3, 2, 1, 0, 4},
             {9, 8, 7, 6, 5, 4, 3, 2, 1, 0}
         };
-
         private static readonly int[,] PermutationTable = {
             {0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
             {1, 5, 7, 6, 4, 8, 9, 0, 3, 2},
@@ -98,9 +88,7 @@ namespace NumberValidator
             {2, 7, 9, 3, 8, 1, 6, 4, 5, 0},
             {7, 0, 4, 6, 9, 3, 1, 2, 5, 8}
         };
-
         private static readonly int[] InverseTable = { 0, 4, 3, 2, 1, 5, 6, 7, 8, 9 };
-
         public static void Validate(string number)
         {
             if (CalculateChecksum(number) != 0)
@@ -108,7 +96,6 @@ namespace NumberValidator
                 throw new InvalidChecksumException();
             }
         }
-
         public static int CalculateChecksum(string number)
         {
             var reversedDigits = number.Reverse().Select(digit => int.Parse(digit.ToString())).ToArray();
@@ -118,28 +105,16 @@ namespace NumberValidator
             {
                 checksum = MultiplicationTable[checksum, PermutationTable[(index + 1) % 8, reversedDigits[index]]];
             }
-
             return InverseTable[checksum];
         }
     }
-
-    class Program
+    public class InvalidFormatException : Exception
     {
-        static void Main(string[] args)
-        {
-            try
-            {
-                var generatedVid = Vid.GenerateValidVid();
-                Console.WriteLine($"Generated VID: {generatedVid}");
-                Console.WriteLine($"Formatted VID: {Vid.Format(generatedVid)}");
-                Console.WriteLine($"Masked VID: {Vid.Mask(generatedVid)}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-            }
+        public InvalidFormatException() : base("The VID format is invalid.") { }
+    }
 
-            Console.ReadLine();
-        }
+    public class InvalidChecksumException : Exception
+    {
+        public InvalidChecksumException() : base("The Verhoeff checksum is invalid.") { }
     }
 }
