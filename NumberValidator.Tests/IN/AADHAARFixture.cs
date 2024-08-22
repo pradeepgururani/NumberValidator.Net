@@ -13,43 +13,71 @@ namespace NumberValidator.Tests
             _validator = new AadhaarValidator();
         }
 
-        [Theory]
-        [InlineData("123456789012", true)]
-        [InlineData("212345678901", true)]
-        [InlineData("112233445566", true)] // Valid Aadhaar number
-        [InlineData("12345678901", false)] // Less than 12 digits
-        [InlineData("1234567890123", false)] // More than 12 digits
-        [InlineData("012345678901", false)] // Starts with 0
-        [InlineData("abcdefghijklm", false)] // Non-numeric
-        public void IsValid_ShouldReturnExpectedResult(string aadhaar, bool expected)
+        [Fact]
+        public void IsValid_ReturnsTrue_ForValidAadhaar()
         {
-            // Act
-            var result = _validator.IsValid(aadhaar);
+            var validAadhaars = new[]
+            {
+                "123456789012",
+                "212345678901",
+                "112233445566"
+            };
 
-            // Assert
-            Assert.Equal(expected, result);
+            foreach (var aadhaar in validAadhaars)
+            {
+                Assert.True(_validator.IsValid(aadhaar));
+            }
         }
 
-        [Theory]
-        [InlineData("123456789012")]
-        [InlineData("212345678901")]
-        public void Validate_ShouldNotThrowException_ForValidAadhaar(string aadhaar)
+        [Fact]
+        public void IsValid_ReturnsFalse_ForInvalidAadhaar()
         {
-            // Act & Assert
-            var exception = Record.Exception(() => _validator.Validate(aadhaar));
-            Assert.Null(exception);
+            var invalidAadhaars = new[]
+            {
+                "12345678901",    // Too short
+                "1234567890123",  // Too long
+                "abcdefghijklm",  // Non-numeric
+                "",               // Empty string
+                null              // Null
+            };
+
+            foreach (var aadhaar in invalidAadhaars)
+            {
+                Assert.False(_validator.IsValid(aadhaar));
+            }
         }
 
-        [Theory]
-        [InlineData("12345678901")] // Less than 12 digits
-        [InlineData("1234567890123")] // More than 12 digits
-        [InlineData("012345678901")] // Starts with 0
-        [InlineData("abcdefghijklm")] // Non-numeric
-        [InlineData(null)] // Null input should also be invalid
-        public void Validate_ShouldThrowArgumentException_ForInvalidAadhaar(string aadhaar)
+        [Fact]
+        public void Validate_DoesNotThrowException_ForValidAadhaar()
         {
-            // Act & Assert
-            Assert.Throws<ArgumentException>(() => _validator.Validate(aadhaar));
+            var validAadhaars = new[]
+            {
+                "123456789012",
+                "212345678901"
+            };
+
+            foreach (var aadhaar in validAadhaars)
+            {
+                Assert.Null(Record.Exception(() => _validator.Validate(aadhaar)));
+            }
+        }
+
+        [Fact]
+        public void Validate_ThrowsFormatException_ForInvalidAadhaar()
+        {
+            var invalidAadhaars = new[]
+            {
+                "12345678901",    // Too short
+                "1234567890123",  // Too long
+                "abcdefghijklm",  // Non-numeric
+                "",               // Empty string
+                null              // Null
+            };
+
+            foreach (var aadhaar in invalidAadhaars)
+            {
+                Assert.Throws<FormatException>(() => _validator.Validate(aadhaar));
+            }
         }
     }
 }
