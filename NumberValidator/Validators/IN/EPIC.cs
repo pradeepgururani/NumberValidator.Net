@@ -19,7 +19,6 @@ namespace NumberValidator.Validators.IN
 {
     public class EPIC : IValidator
     {
-        private static readonly Regex _EPIC_RE = new Regex(@"^[A-Z]{3}[0-9]{7}$", RegexOptions.Compiled);
         public bool IsValid(string epic)
         {
             try
@@ -35,14 +34,18 @@ namespace NumberValidator.Validators.IN
 
         public void Validate(string epic)
         {
-            epic= epic.RemoveSpace();
+            var epicPattern = @"^[A-Z]{3}[0-9]{7}$";
+
+            epic = epic.RemoveSpace();
 
             if (epic.Length != 10)
             {
                 throw new InvalidLengthException();
             }
 
-            if (!_EPIC_RE.IsMatch(epic))
+            Regex epicReg = new Regex(epicPattern);
+
+            if (!epicReg.IsMatch(epic))
             {
                 throw new InvalidFormatException();
             }
