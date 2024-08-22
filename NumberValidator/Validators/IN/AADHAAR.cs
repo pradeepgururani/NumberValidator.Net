@@ -5,7 +5,7 @@ namespace NumberValidator.Validators
 {
     public class AadhaarValidator
     {
-        private static readonly Regex AadhaarRegex = new Regex(@"^\d{12}$");
+        private static readonly Regex aadhaarRegex = new Regex(@"^\d{12}$");
 
         public bool IsValid(string aadhaar)
         {
@@ -27,7 +27,7 @@ namespace NumberValidator.Validators
                 return false;
             }
 
-            return AadhaarRegex.IsMatch(aadhaar);
+            return aadhaarRegex.IsMatch(aadhaar);
         }
     }
 

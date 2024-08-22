@@ -4,13 +4,9 @@ using System.Text.RegularExpressions;
 
 namespace NumberValidator
 {
-    public class InvalidLengthException : Exception { }
-    public class InvalidFormatException : Exception { }
-    public class InvalidChecksumException : Exception { }
-
     public static class Vid
     {
-        private static readonly Regex VidRegex = new Regex(@"^[2-9][0-9]{15}$");
+        private static readonly Regex vidRegex = new Regex(@"^[2-9][0-9]{15}$");
 
         public static string Clear(string number) =>
             number?.Replace(" ", "").Replace("-", "").Trim() ?? string.Empty;
@@ -19,7 +15,7 @@ namespace NumberValidator
         {
             var cleanedNumber = Clear(number);
 
-            if (cleanedNumber.Length != 16 || !VidRegex.IsMatch(cleanedNumber) || IsPalindrome(cleanedNumber))
+            if (cleanedNumber.Length != 16 || !vidRegex.IsMatch(cleanedNumber) || IsPalindrome(cleanedNumber))
             {
                 throw new InvalidFormatException();
             }
