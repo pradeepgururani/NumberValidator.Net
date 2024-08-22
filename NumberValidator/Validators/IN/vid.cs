@@ -4,12 +4,12 @@ using System.Text.RegularExpressions;
 
 namespace NumberValidator.Validators.IN
 {
-    public class Vid : IValidator
+    public class VID : IValidator
     {
         private readonly Regex vidRegex = new Regex(@"^[2-9][0-9]{15}$");
 
-        public string Clear(string number) =>
-            number?.Replace(" ", "").Replace("-", "").Trim() ?? string.Empty;
+        public string Clear(string number) => Clean(number);
+
         public void Validate(string number)
         {
             var cleanedNumber = Clear(number);
@@ -21,6 +21,7 @@ namespace NumberValidator.Validators.IN
 
             VerhoeffAlgorithm.Validate(cleanedNumber);
         }
+
         public bool IsValid(string number)
         {
             try
@@ -33,37 +34,48 @@ namespace NumberValidator.Validators.IN
                 return false;
             }
         }
+
         public string Format(string number)
         {
             var cleanedNumber = Clear(number);
             return $"{cleanedNumber.Substring(0, 4)} {cleanedNumber.Substring(4, 4)} {cleanedNumber.Substring(8, 4)} {cleanedNumber.Substring(12)}";
         }
+
         public string Mask(string number)
         {
             var cleanedNumber = Clear(number);
             return $"XXXX XXXX XXXX {cleanedNumber.Substring(12)}";
         }
+
         private bool IsPalindrome(string number) =>
             number == new string(number.Reverse().ToArray());
+
         public string GenerateValidVid()
         {
-            var validVid = string.Empty;
+            string validVid;
             do
             {
                 validVid = GenerateRandomVid();
             } while (IsPalindrome(validVid) || !IsValid(validVid));
             return validVid;
         }
+
         private string GenerateRandomVid()
         {
             var randomGenerator = new Random();
             var baseNumber = randomGenerator.Next(2, 10).ToString() +
-                string.Concat(Enumerable.Range(0, 14).Select(_ => randomGenerator.Next(0, 10).ToString()));
+                             string.Concat(Enumerable.Range(0, 14).Select(_ => randomGenerator.Next(0, 10).ToString()));
 
             var checksum = VerhoeffAlgorithm.CalculateChecksum(baseNumber);
             return baseNumber + checksum;
         }
+
+        private string Clean(string number)
+        {
+            return number?.Replace(" ", "").Replace("-", "").Trim() ?? string.Empty;
+        }
     }
+
     public static class VerhoeffAlgorithm
     {
         private static readonly int[,] MultiplicationTable = {
@@ -78,6 +90,7 @@ namespace NumberValidator.Validators.IN
             {8, 7, 6, 5, 9, 3, 2, 1, 0, 4},
             {9, 8, 7, 6, 5, 4, 3, 2, 1, 0}
         };
+
         private static readonly int[,] PermutationTable = {
             {0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
             {1, 5, 7, 6, 4, 8, 9, 0, 3, 2},
@@ -88,7 +101,9 @@ namespace NumberValidator.Validators.IN
             {2, 7, 9, 3, 8, 1, 6, 4, 5, 0},
             {7, 0, 4, 6, 9, 3, 1, 2, 5, 8}
         };
+
         private static readonly int[] InverseTable = { 0, 4, 3, 2, 1, 5, 6, 7, 8, 9 };
+
         public static void Validate(string number)
         {
             if (CalculateChecksum(number) != 0)
@@ -96,6 +111,7 @@ namespace NumberValidator.Validators.IN
                 throw new InvalidChecksumException();
             }
         }
+
         public static int CalculateChecksum(string number)
         {
             var reversedDigits = number.Reverse().Select(digit => int.Parse(digit.ToString())).ToArray();
@@ -108,6 +124,7 @@ namespace NumberValidator.Validators.IN
             return InverseTable[checksum];
         }
     }
+
     public class InvalidFormatException : Exception
     {
         public InvalidFormatException() : base("The VID format is invalid.") { }

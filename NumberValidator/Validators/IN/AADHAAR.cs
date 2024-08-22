@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace NumberValidator.Validators.IN
 {
-    public class AadhaarValidator : IValidator
+    public class AADHAAR : IValidator
     {
         private static readonly Regex aadhaarRegex = new Regex(@"^\d{12}$");
 

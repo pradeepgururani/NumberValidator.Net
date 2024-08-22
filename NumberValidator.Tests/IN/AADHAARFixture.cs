@@ -4,13 +4,13 @@ using NumberValidator.Validators.IN;
 
 namespace NumberValidator.Tests.IN
 {
-    public class AadhaarFixture
+    public class AADHAARFixture
     {
-        private readonly AadhaarValidator _validator;
+        private readonly AADHAAR _validator;
 
-        public AadhaarFixture()
+        public AADHAARFixture()
         {
-            _validator = new AadhaarValidator();
+            _validator = new AADHAAR();
         }
 
         [Fact]
