@@ -16,14 +16,14 @@ namespace NumberValidator.Tests
         [Fact]
         public void IsValid_ReturnsTrue_ForValidAadhaar()
         {
-            var validAadhaars = new[]
+            string[] validAadhaars = new[]
             {
                 "123456789012",
                 "212345678901",
                 "112233445566"
             };
 
-            foreach (var aadhaar in validAadhaars)
+            foreach (string aadhaar in validAadhaars)
             {
                 Assert.True(_validator.IsValid(aadhaar));
             }
@@ -32,7 +32,7 @@ namespace NumberValidator.Tests
         [Fact]
         public void IsValid_ReturnsFalse_ForInvalidAadhaar()
         {
-            var invalidAadhaars = new[]
+            string[] invalidAadhaars = new[]
             {
                 "12345678901",    // Too short
                 "1234567890123",  // Too long
@@ -41,7 +41,7 @@ namespace NumberValidator.Tests
                 null              // Null
             };
 
-            foreach (var aadhaar in invalidAadhaars)
+            foreach (string aadhaar in invalidAadhaars)
             {
                 Assert.False(_validator.IsValid(aadhaar));
             }
@@ -50,13 +50,13 @@ namespace NumberValidator.Tests
         [Fact]
         public void Validate_DoesNotThrowException_ForValidAadhaar()
         {
-            var validAadhaars = new[]
+            string[] validAadhaars = new[]
             {
                 "123456789012",
                 "212345678901"
             };
 
-            foreach (var aadhaar in validAadhaars)
+            foreach (string aadhaar in validAadhaars)
             {
                 Assert.Null(Record.Exception(() => _validator.Validate(aadhaar)));
             }
@@ -65,7 +65,7 @@ namespace NumberValidator.Tests
         [Fact]
         public void Validate_ThrowsFormatException_ForInvalidAadhaar()
         {
-            var invalidAadhaars = new[]
+            string[] invalidAadhaars = new[]
             {
                 "12345678901",    // Too short
                 "1234567890123",  // Too long
@@ -74,12 +74,9 @@ namespace NumberValidator.Tests
                 null              // Null
             };
 
-            foreach (var aadhaar in invalidAadhaars)
+            foreach (string aadhaar in invalidAadhaars)
             {
-                if (aadhaar == null || !string.IsNullOrWhiteSpace(aadhaar))
-                {
-                    Assert.Throws<FormatException>(() => _validator.Validate(aadhaar));
-                }
+                Assert.Throws<FormatException>(() => _validator.Validate(aadhaar));
             }
         }
     }
