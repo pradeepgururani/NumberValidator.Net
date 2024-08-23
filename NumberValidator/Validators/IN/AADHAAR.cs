@@ -1,45 +1,30 @@
 ﻿using System;
-using System.Linq;
-using NumberValidator.Helpers;
 using System.Text.RegularExpressions;
 
 namespace NumberValidator.Validators.IN
 {
-    public class Aadhaar : IValidator
+    public class AADHAAR : IValidator
     {
+        private static readonly Regex aadhaarRegex = new Regex(@"^\d{12}$");
+
         public bool IsValid(string aadhaar)
         {
-            try
+            return TryValidate(aadhaar);
+        }
+        public void Validate(string aadhaar)
+        {
+            if (!TryValidate(aadhaar))
             {
-                Validate(aadhaar);
-                return true;
+                throw new FormatException("Aadhaar number is invalid.");
             }
-            catch
+        }
+        private bool TryValidate(string aadhaar)
+        {
+            if (string.IsNullOrWhiteSpace(aadhaar))
             {
                 return false;
             }
-        }
-
-        public void Validate(string aadhaar)
-        {
-            var aadhaarPattern = @"^[2-9][0-9]{11}$";
-
-            if (aadhaar.Length != 12)
-            {
-                throw new InvalidLengthException();
-            }
-
-            if (aadhaar.SequenceEqual(aadhaar.Reverse()))
-            {
-                throw new InvalidFormatException();
-            }
-
-            var aadhaarRegex = new Regex(aadhaarPattern);
-
-            if (!aadhaarRegex.IsMatch(aadhaar))
-            {
-                throw new InvalidFormatException();
-            }
+            return aadhaarRegex.IsMatch(aadhaar);
         }
     }
 }

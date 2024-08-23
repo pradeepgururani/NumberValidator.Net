@@ -1,18 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
-        <LangVersion>7.2</LangVersion>
-    </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<LangVersion>7.2</LangVersion>
+	</PropertyGroup>
 
-    <ItemGroup>
-      <Folder Include="obj\Debug\netstandard1.0" />
-    </ItemGroup>
+	<ItemGroup>
+		<Folder Include="obj\Debug\netstandard1.0" />
+	</ItemGroup>
 
-    <ItemGroup>
-      <Reference Include="System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-        <HintPath>C:\Users\PradeepGururani\.nuget\packages\netstandard.library\2.0.3\build\netstandard2.0\ref\System.Core.dll</HintPath>
-      </Reference>
-    </ItemGroup>
+	<ItemGroup>
+		<Reference Include="System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+			<HintPath>C:\Users\PradeepGururani\.nuget\packages\netstandard.library\2.0.3\build\netstandard2.0\ref\System.Core.dll</HintPath>
+		</Reference>
+	</ItemGroup>
 
 </Project>

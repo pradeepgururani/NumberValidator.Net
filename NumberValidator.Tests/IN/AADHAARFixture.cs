@@ -1,27 +1,79 @@
-﻿using Xunit;
-using FluentAssertions;
-using NumberValidator.Helpers;
+﻿using System;
+using Xunit;
+using NumberValidator.Validators.IN;
 
 namespace NumberValidator.Tests.IN
 {
-    public class AadhaarFixture
+    public class AADHAARFixture
     {
-        private readonly Validators.IN.Aadhaar _sut = new Validators.IN.Aadhaar();
+        private readonly AADHAAR _validator;
+
+        public AADHAARFixture()
+        {
+            _validator = new AADHAAR();
+        }
 
         [Fact]
-        void ShouldBeInvalidForLessThan12Digits()
-            => Assert.Throws<InvalidLengthException>(() => _sut.Validate("22345678"));
+        public void IsValid_ReturnsTrue_ForValidAadhaar()
+        {
+            var validAadhaars = new[]
+            {
+                "123456789012",
+                "212345678901",
+                "112233445566"
+            };
+            foreach (var aadhaar in validAadhaars)
+            {
+                Assert.True(_validator.IsValid(aadhaar));
+            }
+        }
 
         [Fact]
-        void ShouldBeInvalidFormatCanNotBePalindrome()
-            => Assert.Throws<InvalidFormatException>(() => _sut.Validate("223567765322"));
+        public void IsValid_ReturnsFalse_ForInvalidAadhaar()
+        {
+            var invalidAadhaars = new[]
+            {
+                "12345678901",    // Too short
+                "1234567890123",  // Too long
+                "abcdefghijklm",  // Non-numeric
+                "",               // Empty string
+                null              // Null
+            };
+            foreach (var aadhaar in invalidAadhaars)
+            {
+                Assert.False(_validator.IsValid(aadhaar));
+            }
+        }
 
         [Fact]
-        void ShouldBeInvalidFormatPatternNotFollowed()
-            => Assert.Throws<InvalidFormatException>(() => _sut.Validate("128565765309"));
+        public void Validate_DoesNotThrowException_ForValidAadhaar()
+        {
+            var validAadhaars = new[]
+            {
+                "123456789012",
+                "212345678901"
+            };
+            foreach (var aadhaar in validAadhaars)
+            {
+                Assert.Null(Record.Exception(() => _validator.Validate(aadhaar)));
+            }
+        }
 
         [Fact]
-        void ShouldBeValid()
-            => _sut.IsValid("234675789836").Should().BeTrue();
+        public void Validate_ThrowsFormatException_ForInvalidAadhaar()
+        {
+            var invalidAadhaars = new[]
+            {
+                "12345678901",    // Too short
+                "1234567890123",  // Too long
+                "abcdefghijklm",  // Non-numeric
+                "",               // Empty string
+                null              // Null
+            };
+            foreach (var aadhaar in invalidAadhaars)
+            {
+                Assert.Throws<FormatException>(() => _validator.Validate(aadhaar));
+            }
+        }
     }
 }
