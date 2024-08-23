@@ -8,19 +8,19 @@ namespace NumberValidator.Tests.IN
         [Fact]
         public void LessThan16Digits_ThrowsInvalidFormatException()
         {
-            Assert.Throws<InvalidFormatException>(() => new VID().Validate("12345678901234"));
+            Assert.Throws<NumberValidator.Validators.IN.InvalidFormatException>(() => new VID().Validate("12345678901234"));
         }
 
         [Fact]
         public void Palindrome_ThrowsInvalidFormatException()
         {
-            Assert.Throws<InvalidFormatException>(() => new VID().Validate("1234567890123456"));
+            Assert.Throws<NumberValidator.Validators.IN.InvalidFormatException>(() => new VID().Validate("1234567890123456"));
         }
 
         [Fact]
         public void InvalidPattern_ThrowsInvalidFormatException()
         {
-            Assert.Throws<InvalidFormatException>(() => new VID().Validate("0123456789012345"));
+            Assert.Throws<NumberValidator.Validators.IN.InvalidFormatException>(() => new VID().Validate("0123456789012345"));
         }
 
         [Fact]
@@ -28,7 +28,7 @@ namespace NumberValidator.Tests.IN
         {
             var validVid = new VID().GenerateValidVid();
             var invalidVid = validVid.Substring(0, 15) + (validVid[15] == '0' ? '1' : (char)(validVid[15] - 1));
-            Assert.Throws<InvalidChecksumException>(() => new VID().Validate(invalidVid));
+            Assert.Throws<NumberValidator.Validators.IN.InvalidChecksumException>(() => new VID().Validate(invalidVid));
         }
 
         [Fact]
